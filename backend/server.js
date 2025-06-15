@@ -9,6 +9,9 @@ require("dotenv").config({path: "./config/.env"});
 
 connectDB();
 
+//middleware to parse json bodies
+app.use(express.json());
+
 //handle routes
 app.use("/api/notes", require("./routes/notes"));
 
