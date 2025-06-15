@@ -3,7 +3,7 @@ const Note = require('../models/noteModel')
 //HTTP GET request to get all notes
 const getNotes = async (req, res) => {
     try {
-        const notes = await Note.find()
+        const notes = await Note.find().sort({createdAt: -1})
         res.status(200).json(notes)
     } catch (err) {
         console.log(`Error getting notes: ${err.message}`)
