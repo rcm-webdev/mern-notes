@@ -1,11 +1,27 @@
 const Note = require('../models/noteModel')
 
+//HTTP GET request to get all notes
 const getNotes = async (req, res) => {
     try {
         const notes = await Note.find()
         res.status(200).json(notes)
     } catch (err) {
         console.log(`Error getting notes: ${err.message}`)
+        res.status(500).json({message: err.message})
+    }
+}
+
+//HTTP GET request to get a note by id
+const getNoteById = async (req, res) => {
+    try {
+        const {id} = req.params
+        const note = await Note.findById(id)
+        if (!note) {
+            return res.status(404).json({message: `Note ${id} not found`})
+        }
+        res.status(200).json(note)
+    } catch (err) {
+        console.log(`Error getting note by id: ${err.message}`)
         res.status(500).json({message: err.message})
     }
 }
@@ -58,6 +74,7 @@ const deleteNote = async(req, res) => {
 
 module.exports = {
     getNotes,
+    getNoteById,
     createNote,
     updateNote,
     deleteNote
