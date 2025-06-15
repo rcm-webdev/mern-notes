@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 //controllers are used to handle the logic of the routes
-const { getNotes, createNote, updateNote, deleteNote } = require("../controllers/noteController");
+const { getNotes, getNoteById, createNote, updateNote, deleteNote } = require("../controllers/noteController");
 
 
 router.get("/", getNotes)
+
+router.get("/:id", getNoteById)
 
 router.post("/", createNote)
 
