@@ -2,12 +2,14 @@
 //express is a powerful web framework for node.js
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
-
+const connectDB = require("./config/database");
 
 //dotenv is a module that loads env variables from the .env file in the config directory
-dotenv.config({path: "./config/.env"});
+require("dotenv").config({path: "./config/.env"});
 
+connectDB();
+
+//handle routes
 app.use("/api/notes", require("./routes/notes"));
 
 app.listen(process.env.PORT, () => {

@@ -1,22 +1,15 @@
 const express = require("express");
 const router = express.Router();
+//controllers are used to handle the logic of the routes
+const { getNotes, createNote, updateNote, deleteNote } = require("../controllers/noteController");
 
 
+router.get("/", getNotes)
 
-router.get("/", (req, res) => {
-    res.send("You have created an api endpoint from the notes route")
-})
+router.post("/", createNote)
 
-router.post("/", (req, res) => {
-    res.json({message: `You have created a post with id: ${req.params.id}`})
-})
+router.put("/:id", updateNote)
 
-router.put("/:id", (req, res) => {
-    res.json({message: `You have updated note ${req.params.id}`})
-})
-
-router.delete("/:id", (req, res) => {
-    res.json({message: `You have deleted note ${req.params.id}`})
-})
+router.delete("/:id", deleteNote)
 
 module.exports = router;
