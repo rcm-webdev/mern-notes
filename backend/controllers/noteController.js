@@ -32,6 +32,9 @@ const updateNote = async(req, res) => {
     const {id} = req.params
     const {title, content} = req.body
     const updatedNote = await Note.findByIdAndUpdate(id, {title, content}, {new: true})
+    if (!updatedNote) {
+        return res.status(404).json({message: `Note ${id} not found`})
+    }
     res.status(200).json({message: `Note ${id} updated successfully`})
    } catch (err) {
     console.log(`Error updating note: ${err.message}`)
@@ -43,7 +46,10 @@ const updateNote = async(req, res) => {
 const deleteNote = async(req, res) => {
     try{
         const {id} = req.params
-        await Note.findByIdAndDelete(id)
+        const deletedNote = await Note.findByIdAndDelete(id)
+        if (!deletedNote) {
+            return res.status(404).json({message: `Note ${id} not found`})
+        }
         res.status(200).json({message: `Note ${id} deleted successfully`})
     } catch (err) {
         console.log(`Error deleting note: ${err.message}`)
