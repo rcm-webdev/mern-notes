@@ -7,14 +7,20 @@ const connectDB = require("./config/database");
 //dotenv is a module that loads env variables from the .env file in the config directory
 require("dotenv").config({path: "./config/.env"});
 
-connectDB();
 
-//middleware to parse json bodies
+
+//middleware to parse json bodies. This will essentially allow us to get req.body
 app.use(express.json());
+
 
 //handle routes
 app.use("/api/notes", require("./routes/notes"));
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}. You better go catch it!`);
-});
+//connect to db and then start the server. 
+//if we don't connect to db, the server will not start
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}. You better go catch it!`);
+  });
+})
+
