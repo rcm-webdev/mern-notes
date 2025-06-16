@@ -16,7 +16,12 @@ app.use(express.json());
 
 //handle routes
 app.use("/api/notes", require("./routes/notes"));
-app.use(cors());
+app.use(cors(
+  {
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }
+));
 
 //connect to db and then start the server. 
 //if we don't connect to db, the server will not start
