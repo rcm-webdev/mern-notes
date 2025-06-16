@@ -37,18 +37,31 @@ const CreateNote = () => {
                 <div className="card bg-base-100 shadow-sm">
                     <div className="card-body">
                         <h2 className="card-title text-2xl font-bold text-base-content">Create New Note</h2>
-                        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+                        <form id="create-note-form" onSubmit={handleSubmit} className="mt-4 space-y-4">
                             <div className="form-control">
-                                <label className="label text-base-content/80 font-semibold mb-2">
+                                <label htmlFor="title" className="label text-base-content/80 font-semibold mb-2">
                                     <span className="label-text">Title</span>
                                 </label>
-                                <input type="text" placeholder="Title" className="input input-bordered w-full" value={title} onChange={(e) => setTitle(e.target.value)} />
+                                <input 
+                                    id="title"
+                                    type="text" 
+                                    placeholder="Title" 
+                                    className="input input-bordered w-full" 
+                                    value={title} 
+                                    onChange={(e) => setTitle(e.target.value)} 
+                                />
                             </div>
                             <div className="form-control">
-                                <label className="label text-base-content/80 font-semibold mb-2">
+                                <label htmlFor="content" className="label text-base-content/80 font-semibold mb-2">
                                     <span className="label-text">Content</span>
                                 </label>
-                                <textarea placeholder="Content" className="textarea textarea-bordered w-full" value={content} onChange={(e) => setContent(e.target.value)} />
+                                <textarea 
+                                    id="content"
+                                    placeholder="Content" 
+                                    className="textarea textarea-bordered w-full" 
+                                    value={content} 
+                                    onChange={(e) => setContent(e.target.value)} 
+                                />
                             </div>
                             <div className="mt-4 flex justify-end">
                                 <button type="submit" className="btn btn-ghost border-base-content/20" disabled={isLoading}>
