@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate  } from "react-router";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, PlusIcon} from "lucide-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -65,6 +65,7 @@ const CreateNote = () => {
                             </div>
                             <div className="mt-4 flex justify-end">
                                 <button type="submit" className="btn btn-ghost border-base-content/20" disabled={isLoading}>
+                                    <PlusIcon className="size-4 mr-2" />
                                     {isLoading ? "Creating..." : "Create Note"}
                                 </button>
                             </div>
