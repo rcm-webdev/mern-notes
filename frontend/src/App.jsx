@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router'
 import Home from './pages/Home'
 import CreateNote from './pages/Create'
 import Note from './pages/Note'
-import { toast } from 'react-hot-toast'
 import Navbar from './components/Navbar'
+import Login from './pages/Login'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<CreateNote />} />
           <Route path="/note/:id" element={<Note />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>
