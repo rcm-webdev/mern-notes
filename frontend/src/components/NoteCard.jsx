@@ -1,27 +1,50 @@
 import { Trash2Icon, PenSquareIcon} from "lucide-react";
 import { Link } from "react-router";
 import formatDate from "../lib/utils";
-const NoteCard = ({note}) => {
+import { useNavigate } from "react-router";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
+const NoteCard = ({note, onDelete}) => {
+    const navigate = useNavigate();
+    const handleEdit = (e) => {
+        e.preventDefault();
+        try {
+            navigate(`/note/${note._id}`);
+        } catch (error) {
+            toast.error("Error editing note");
+        }
+    }
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+            await axios.delete(`http://localhost:2121/api/notes/${note._id}`);
+            toast.success("Note deleted successfully");
+            onDelete(note._id);
+            navigate("/");
+        } catch (error) {
+            toast.error("Error deleting note");
+        }
+    }
     return (
-        <Link to={`/note/${note._id}`} className="card bg-base-200 hover:bg-base-100 transition-all duration-300 border-t-4 border-primary border-solid">
-            <div className="card-body">
+        <div className="card bg-base-200 hover:bg-base-100 transition-all duration-300 border-t-4 border-primary border-solid">
+            <Link to={`/note/${note._id}`} className="card-body">
                 <h2 className="card-title text-lg font-bold text-base-content"> {note.title} </h2>
                 <p className="text-sm text-base-content/80"> {note.content} </p>
                 <div className="card-actions justify-between items-center">
                     <span className="text-sm text-base-content/80"> {formatDate(note.createdAt)} </span>
                     <div className="flex gap-2 items-center">
-                        
+                        <button className="btn btn-ghost btn-sm" onClick={handleEdit}>
                             <PenSquareIcon className="size-4" />
-                      
-                        <button className="btn btn-ghost btn-sm">
-
+                        </button>
+                        <button className="btn btn-ghost btn-sm" onClick={handleDelete}>
                             <Trash2Icon className="size-4 text-error" />
-                        </button> 
-                        
+                        </button>   
                     </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </div>
     )
 }
 
