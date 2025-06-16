@@ -12,16 +12,17 @@ require("dotenv").config({path: "./config/.env"});
 
 //middleware to parse json bodies. This will essentially allow us to get req.body
 app.use(express.json());
-
-
-//handle routes
-app.use("/api/notes", require("./routes/notes"));
 app.use(cors(
   {
     origin: process.env.FRONTEND_URL,
     credentials: true,
   }
 ));
+
+
+//handle routes
+app.use("/api/notes", require("./routes/notes"));
+
 
 //connect to db and then start the server. 
 //if we don't connect to db, the server will not start
