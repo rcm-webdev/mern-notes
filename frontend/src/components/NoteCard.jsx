@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import formatDate from "../lib/utils";
 import { useNavigate } from "react-router";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import api from "../lib/axios";
 
 const NoteCard = ({note, onDelete}) => {
     const navigate = useNavigate();
@@ -18,13 +18,15 @@ const NoteCard = ({note, onDelete}) => {
     const handleDelete = async (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (window.confirm("Are you sure you want to delete this note?")) {
         try {
-            await axios.delete(`http://localhost:2121/api/notes/${note._id}`);
+            await api.delete(`/notes/${note._id}`);
             toast.success("Note deleted successfully");
             onDelete(note._id);
             navigate("/");
-        } catch (error) {
-            toast.error("Error deleting note");
+                } catch (error) {
+                toast.error("Failed to delete note");
+            }
         }
     }
     return (
