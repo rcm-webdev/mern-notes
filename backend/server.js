@@ -2,6 +2,7 @@
 //express is a powerful web framework for node.js
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const connectDB = require("./config/database");
 
 //dotenv is a module that loads env variables from the .env file in the config directory
@@ -15,6 +16,7 @@ app.use(express.json());
 
 //handle routes
 app.use("/api/notes", require("./routes/notes"));
+app.use(cors());
 
 //connect to db and then start the server. 
 //if we don't connect to db, the server will not start
