@@ -28,7 +28,10 @@ const NoteCard = ({note, onDelete}) => {
         }
     }
     return (
-        <div className="card bg-base-200 hover:bg-base-100 transition-all duration-300 border-t-4 border-primary border-solid">
+        <div >
+           
+
+<div className=" card bg-base-200 border-t-4 border-primary transition-all duration-300 hover:border-primary/75 ">
             <Link to={`/note/${note._id}`} className="card-body">
                 <h2 className="card-title text-lg font-bold text-base-content"> {note.title} </h2>
                 <p className="text-sm text-base-content/80"> {note.content} </p>
@@ -45,6 +48,8 @@ const NoteCard = ({note, onDelete}) => {
                 </div>
             </Link>
         </div>
+        </div>
+        
     )
 }
 
