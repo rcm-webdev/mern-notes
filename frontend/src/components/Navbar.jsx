@@ -8,11 +8,14 @@ const Navbar = () => {
             <div className="flex justify-between items-center">
                 <Link className="btn btn-ghost text-xl" to="/">Notes App</Link>
                 <nav>
-                    
-                    <Link className="btn btn-primary" to="/create">
+                    <div className="relative group">
+                    <div className="absolute -inset-0 bg-base-300 group-hover:bg-primary rounded-2xl blur transition-all duration-200"></div>
+                    <Link className="relative btn border-1 border-base-content/75  " to="/create">
                         <PlusIcon className="size-5 font-bold mr-2" />
-                        <span className="hidden md:inline">Create Note</span>
+                        <span className="hidden md:inline ">Create Note</span>
                     </Link>
+                    </div>
+                    
                 </nav>
             </div>
         </div>
