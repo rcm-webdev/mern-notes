@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate  } from "react-router";
 import { ArrowLeftIcon, PlusIcon} from "lucide-react";
-import axios from "axios";
+import api from "../lib/axios";
 import { toast } from "react-hot-toast";
 
 const CreateNote = () => {
@@ -17,11 +17,16 @@ const CreateNote = () => {
         }
         setIsLoading(true);
         try {
-            const response = await axios.post("http://localhost:2121/api/notes", { title, content });
-            toast.success("Note created successfully");
+            const response = await api.post("/notes", { title, content });
+            console.log(response);
+            toast.success("You've created a new note", {
+                icon: "🎉",
+                className: "bg-gradient-to-r from-accent via-accent-focus to-primary",
+                
+            });
             navigate("/");
         } catch (error) {
-            toast.error("Error creating note");
+            toast.error("Failed to create note");
         } finally {
             setIsLoading(false);
         }

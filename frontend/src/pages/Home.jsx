@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../lib/axios";
 import NoteCard from "../components/NoteCard";
 import { useState, useEffect } from "react";
 
@@ -7,7 +7,7 @@ const Home = () => {
 
     const fetchNotes = async () => {
         try {
-            const res = await axios.get("http://localhost:2121/api/notes");
+            const res = await api.get("/notes");
             setNotes(res.data);
         } catch (error) {
             console.error("Error fetching notes:", error);
