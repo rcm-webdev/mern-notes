@@ -1,4 +1,4 @@
-import { NotebookIcon, PlusIcon } from "lucide-react"
+import { NotebookIcon, FilePlus2 } from "lucide-react"
 import { Link } from "react-router"
 
 const NoNotesFound = () => {
@@ -13,7 +13,7 @@ const NoNotesFound = () => {
             </div>
             <div>
                 <Link to="/create" className="btn btn-primary">
-                <PlusIcon className="size-4 mr-2"/>
+                <FilePlus2 className="size-4 mr-2"/>
                 Create Your First Note</Link>
             </div>
         </div>
