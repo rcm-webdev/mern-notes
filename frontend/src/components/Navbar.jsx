@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { PlusIcon } from "lucide-react";
+import { FilePlus2 } from "lucide-react";
 
 const Navbar = () => {
     return (
@@ -10,10 +10,10 @@ const Navbar = () => {
                 <span className="bg-gradient-to-r from-accent via-accent-focus to-primary bg-clip-text text-transparent">Notes App</span>
                 </Link>
                 <nav>
-                    <div className="relative group">
-                    <div className="absolute -inset-0 bg-base-300 group-hover:bg-primary rounded-2xl blur transition-all duration-200"></div>
-                    <Link className="relative btn border-1 border-base-content/75  " to="/create">
-                        <PlusIcon className="size-5 font-bold mr-2" />
+                    <div >
+                    
+                    <Link className="btn btn-primary btn-outline " to="/create">
+                        <FilePlus2 className="size-4 font-bold mr-2" />
                         <span className="hidden md:inline ">Create Note</span>
                     </Link>
                     </div>

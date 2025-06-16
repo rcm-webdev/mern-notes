@@ -35,7 +35,7 @@ const CreateNote = () => {
         <div className="min-h-screen bg-base-200">
             <div className="container mx-auto p-4">
                <div className="max-w-2xl mx-auto">
-                <Link to="/" className="btn btn-ghost border-base-content/20 mb-4">
+                <Link to="/" className="btn btn-accent btn-outline mb-4">
                 <ArrowLeftIcon className="size-4" />
                 Back to Notes</Link>
 
