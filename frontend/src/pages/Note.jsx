@@ -29,6 +29,10 @@ const Note = () => {
     const handleSave = async (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (!note.title || !note.content) {
+            toast.error("Please fill in all fields");
+            return;
+        }
         try {
             setSaving(true);
             await api.put(`/notes/${id}`, note);
@@ -94,10 +98,11 @@ const Note = () => {
               <div className="card bg-base-100">
                 <div className="card-body">
                   <div className="form-control flex flex-col mb-4 space-y-2">
-                    <label className="label">
+                    <label htmlFor="title" className="label">
                       <span className="label-text">Title</span>
                     </label>
                     <input
+                      id="title"
                       type="text"
                       placeholder="Note title"
                       className="input input-bordered"
@@ -107,10 +112,11 @@ const Note = () => {
                   </div>
     
                   <div className="form-control flex flex-col mb-4 space-y-2">
-                    <label className="label">
+                    <label htmlFor="content" className="label">
                       <span className="label-text">Content</span>
                     </label>
                     <textarea
+                      id="content"
                       placeholder="Write your note here..."
                       className="textarea textarea-bordered h-32"
                       value={note.content}
