@@ -6,7 +6,9 @@ const Navbar = () => {
     <header className="bg-base-300 border-b border-base-content/10">
         <div className="max-w-4xl mx-auto p-4">
             <div className="flex justify-between items-center">
-                <Link className="btn btn-ghost text-xl" to="/">Notes App</Link>
+                <Link className="btn btn-ghost text-xl" to="/">
+                <span className="bg-gradient-to-r from-accent via-accent-focus to-primary bg-clip-text text-transparent">Notes App</span>
+                </Link>
                 <nav>
                     <div className="relative group">
                     <div className="absolute -inset-0 bg-base-300 group-hover:bg-primary rounded-2xl blur transition-all duration-200"></div>
