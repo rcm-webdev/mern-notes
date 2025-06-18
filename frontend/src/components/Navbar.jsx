@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { FilePlus2, LogInIcon } from "lucide-react";
+import { FilePlus2, LogInIcon, UserPlusIcon } from "lucide-react";
 import api from "../lib/axios";
 import { useState, useEffect } from "react";   
 
@@ -24,6 +24,12 @@ const Navbar = () => {
                         <Link className="btn btn-primary btn-outline" to="/login">
                         <LogInIcon className="size-4 font-bold mr-2" />
                            <span className="hidden md:inline ">Login</span>
+                        </Link>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Link className="btn btn-primary btn-outline" to="/register">
+                         <UserPlusIcon className="size-4 font-bold mr-2" />
+                           <span className="hidden md:inline ">Register</span>
                         </Link>
                     </div>
                     {/* if user is not logged in, hide the create note button */}
