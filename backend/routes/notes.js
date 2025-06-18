@@ -2,16 +2,11 @@ const express = require("express");
 const router = express.Router();
 //controllers are used to handle the logic of the routes
 const { getNotes, getNoteById, createNote, updateNote, deleteNote } = require("../controllers/noteController");
+const { protect } = require("../middleware/authMiddleware");
 
+router.get("/", protect, getNotes).post("/", protect, createNote)
 
-router.get("/", getNotes)
+router.get("/:id", protect, getNoteById).put("/:id", protect, updateNote).delete("/:id", protect, deleteNote)
 
-router.get("/:id", getNoteById)
-
-router.post("/", createNote)
-
-router.put("/:id", updateNote)
-
-router.delete("/:id", deleteNote)
 
 module.exports = router;
