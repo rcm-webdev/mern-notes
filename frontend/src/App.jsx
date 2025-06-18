@@ -4,6 +4,7 @@ import CreateNote from './pages/Create'
 import Note from './pages/Note'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/create" element={<CreateNote />} />
           <Route path="/note/:id" element={<Note />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </div>
