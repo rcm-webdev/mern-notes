@@ -23,7 +23,6 @@ const NoteCard = ({note, onDelete}) => {
             await api.delete(`/notes/${note._id}`);
             toast.success("Note deleted successfully");
             onDelete(note._id);
-            navigate("/");
                 } catch (error) {
                 toast.error("Failed to delete note");
             }

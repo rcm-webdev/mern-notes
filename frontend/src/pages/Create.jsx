@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate  } from "react-router";
 import { ArrowLeftIcon, PlusIcon} from "lucide-react";
 import api from "../lib/axios";
@@ -9,6 +9,30 @@ const CreateNote = () => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+
+    // Check if user is authenticated
+    useEffect(() => {
+        const checkAuth = async () => {
+            // Check if token exists in localStorage first
+            const token = localStorage.getItem("token");
+            if (!token) {
+                // No token, redirect to login immediately
+                navigate("/login");
+                return;
+            }
+            
+            try {
+                await api.get("/users/profile");
+            } catch (error) {
+                // If user is not authenticated, clear token and redirect to login
+                localStorage.removeItem("token");
+                navigate("/login");
+            }
+        };
+        
+        checkAuth();
+    }, [navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title.trim() || !content.trim()) {
@@ -24,7 +48,7 @@ const CreateNote = () => {
                 className: "bg-gradient-to-r from-accent via-accent-focus to-primary",
                 
             });
-            navigate("/");
+            navigate("/dashboard");
         } catch (error) {
             toast.error("Failed to create note");
         } finally {
@@ -35,7 +59,7 @@ const CreateNote = () => {
         <div className="min-h-screen bg-base-200">
             <div className="container mx-auto p-4">
                <div className="max-w-2xl mx-auto">
-                <Link to="/" className="btn btn-accent btn-outline mb-4">
+                <Link to="/dashboard" className="btn btn-accent btn-outline mb-4">
                 <ArrowLeftIcon className="size-4" />
                 Back to Notes</Link>
 

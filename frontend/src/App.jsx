@@ -5,6 +5,8 @@ import Note from './pages/Note'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create" element={<CreateNote />} />
           <Route path="/note/:id" element={<Note />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

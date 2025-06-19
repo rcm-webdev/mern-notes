@@ -13,6 +13,31 @@ const Note = () => {
     const [saving, setSaving] = useState(false);
 
     const navigate = useNavigate();
+
+    // Check if user is authenticated
+    useEffect(() => {
+        const checkAuth = async () => {
+            // Check if token exists in localStorage first
+            const token = localStorage.getItem("token");
+            if (!token) {
+                // No token, redirect to login immediately
+                navigate("/login");
+                return;
+            }
+            
+            try {
+                await api.get("/users/profile");
+            } catch (error) {
+                // If user is not authenticated, clear token and redirect to login
+                localStorage.removeItem("token");
+                navigate("/login");
+                return;
+            }
+        };
+        
+        checkAuth();
+    }, [navigate]);
+
     const handleDelete = async (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -20,7 +45,7 @@ const Note = () => {
             try {
                 await api.delete(`/notes/${id}`);
                 toast.success("Note deleted successfully");
-                navigate("/");
+                navigate("/dashboard");
             } catch (error) {
                 toast.error("Failed to delete note");
             }
@@ -37,7 +62,7 @@ const Note = () => {
             setSaving(true);
             await api.put(`/notes/${id}`, note);
             toast.success("Note updated successfully");
-            navigate("/");
+            navigate("/dashboard");
         } catch (error) {
             toast.error("Failed to update note");
         } finally {
@@ -71,7 +96,7 @@ const Note = () => {
             <div className="min-h-screen bg-base-200 flex items-center justify-center">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Note not found</h2>
-                    <Link to="/" className="btn btn-primary">
+                    <Link to="/dashboard" className="btn btn-primary">
                         <ArrowLeftIcon className="h-5 w-5 mr-2" />
                         Back to Notes
                     </Link>
@@ -85,7 +110,7 @@ const Note = () => {
           <div className="container mx-auto px-4 py-8">
             <div className="max-w-2xl mx-auto">
               <div className="flex items-center justify-between mb-6">
-                <Link to="/" className="btn btn-accent btn-outline">
+                <Link to="/dashboard" className="btn btn-accent btn-outline">
                   <ArrowLeftIcon className="h-5 w-5" />
                   Back to Notes
                 </Link>

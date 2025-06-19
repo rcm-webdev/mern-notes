@@ -1,5 +1,5 @@
 import { NotebookIcon, LogInIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import api from "../lib/axios";
 
@@ -15,6 +15,31 @@ const Register = () => {
     const [passwordError, setPasswordError] = useState("");
     const [passwordLengthError, setPasswordLengthError] = useState("");
     const navigate = useNavigate();
+
+    // Check if user is already logged in
+    useEffect(() => {
+        const checkAuth = async () => {
+            // Check if token exists in localStorage first
+            const token = localStorage.getItem("token");
+            if (!token) {
+                return; // No token, stay on register page
+            }
+            
+            try {
+                const response = await api.get("/users/profile");
+                if (response.status === 200) {
+                    // User is already logged in, redirect to dashboard
+                    navigate("/dashboard");
+                }
+            } catch (error) {
+                // Token is invalid, clear it and stay on register page
+                localStorage.removeItem("token");
+                console.log("Invalid token, staying on register page");
+            }
+        };
+        
+        checkAuth();
+    }, [navigate]);
 
     // onChange function to update form data
     const onChange = (e) => {
@@ -32,10 +57,13 @@ const Register = () => {
             setPasswordLengthError("Password must be at least 8 characters long");
             return;
         }
-        const response = await api.post("/users/register", { email, password, confirmPassword });
+        const response = await api.post("/users", { name, email, password });
         console.log(response);
-        if (response.status === 200) {
-            navigate("/");
+        if (response.status === 201) {
+            localStorage.setItem("token", response.data.token);
+            // Dispatch custom event to notify Navbar to refetch user data
+            window.dispatchEvent(new CustomEvent('userLoggedIn'));
+            navigate("/dashboard");
         }
     }
     return (
