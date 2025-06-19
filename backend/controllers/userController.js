@@ -6,7 +6,6 @@ const User = require("../models/userModel");
 // @desc Register a new user
 // @route POST /api/users
 // @access Public
-
 const registerUser = asyncHandler(async(req, res) => {
     const {name, email, password} = req.body;
     if (!name || !email || !password) {
@@ -14,11 +13,8 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new Error("Please add all fields");
     }
 
-    // Check password length
-    if (password.length < 8) {
-        res.status(400);
-        throw new Error("Password must be at least 8 characters long");
-    }
+    // Enhanced password validation
+    validatePassword(password);
 
     // Check if user exists
     const userExists = await User.findOne({ email });
@@ -39,11 +35,12 @@ const registerUser = asyncHandler(async(req, res) => {
     });
 
     if (user) {
+        const token = generateToken(user._id);
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
-            token: generateToken(user._id)
+            token: token
         });
         console.log(user);
     } else {
@@ -51,7 +48,6 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new Error("Invalid user data");
     }
 });
-
 
 const loginUser = asyncHandler(async(req, res) => {
     const {email, password} = req.body;
@@ -62,11 +58,12 @@ const loginUser = asyncHandler(async(req, res) => {
     //check if user exists
     const user = await User.findOne({email});   
     if (user && (await bcrypt.compare(password, user.password))) {
+        const token = generateToken(user._id);
         res.json({
             _id: user.id,
             name: user.name,
             email: user.email,
-            token: generateToken(user._id)
+            token: token
         });
     } else {
         res.status(400);
@@ -78,15 +75,47 @@ const loginUser = asyncHandler(async(req, res) => {
 // @route GET /api/users/profile
 // @access Private
 const getUserProfile = asyncHandler(async(req, res) => {
-    res.json({message: "Get user profile"})
+    const user = await User.findById(req.user.id);
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        });
+    } else {
+        res.status(404);
+        throw new Error("User not found");
+    }
+});
+
+// @desc Logout user
+// @route POST /api/users/logout
+// @access Private
+const logoutUser = asyncHandler(async(req, res) => {
+    // Since we're using JWT tokens, we can't actually invalidate them server-side
+    // The client should remove the token from storage
+    res.json({ message: "Logged out successfully" });
 });
 
 //Generate JWT
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"});
-}
+};
 
+// Enhanced password validation
+const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    if (password.length < minLength) {
+        throw new Error("Password must be at least 8 characters long");
+    }
+    if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+        throw new Error("Password must contain uppercase, lowercase, number, and special character");
+    }
+};
 
-
-
-module.exports = { registerUser, loginUser, getUserProfile};
+module.exports = { registerUser, loginUser, getUserProfile, logoutUser };
