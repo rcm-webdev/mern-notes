@@ -1,4 +1,5 @@
 const Note = require('../models/noteModel')
+const logger = require('../utils/logger')
 
 //HTTP GET request to get all notes
 const getNotes = async (req, res) => {
@@ -6,7 +7,7 @@ const getNotes = async (req, res) => {
         const notes = await Note.find({user: req.user.id}).sort({createdAt: -1})
         res.status(200).json(notes)
     } catch (err) {
-        console.log(`Error getting notes: ${err.message}`)
+        logger.error({ err }, 'Error getting notes')
         res.status(500).json({message: err.message})
     }
 }
@@ -21,7 +22,7 @@ const getNoteById = async (req, res) => {
         }
         res.status(200).json(note)
     } catch (err) {
-        console.log(`Error getting note by id: ${err.message}`)
+        logger.error({ err }, 'Error getting note by id')
         res.status(500).json({message: err.message})
     }
 }
@@ -37,7 +38,7 @@ const createNote = async (req, res) => {
         const newNote = await Note.create({title, content, user: req.user.id})
         res.status(201).json({message: `Note ${newNote._id} created successfully`})
     } catch (err) {
-        console.log(`Error creating note: ${err.message}`)
+        logger.error({ err }, 'Error creating note')
         res.status(500).json({message: err.message})
     }
 }
@@ -54,7 +55,7 @@ const updateNote = async(req, res) => {
     }
     res.status(200).json({message: `Note ${id} updated successfully`})
    } catch (err) {
-    console.log(`Error updating note: ${err.message}`)
+    logger.error({ err }, 'Error updating note')
 }
 }
 
@@ -70,7 +71,7 @@ const deleteNote = async(req, res) => {
         }
         res.status(200).json({message: `Note ${id} deleted successfully`})
     } catch (err) {
-        console.log(`Error deleting note: ${err.message}`)
+        logger.error({ err }, 'Error deleting note')
     }
 }
 

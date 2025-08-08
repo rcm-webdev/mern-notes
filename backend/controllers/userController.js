@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const logger = require('../utils/logger');
 
 // @desc Register a new user
 // @route POST /api/users
@@ -36,13 +37,13 @@ const registerUser = asyncHandler(async(req, res) => {
 
     if (user) {
         const token = generateToken(user._id);
+        logger.info({ userId: user.id, email: user.email }, 'User registered');
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
             token: token
         });
-        console.log(user);
     } else {
         res.status(400);
         throw new Error("Invalid user data");
@@ -59,6 +60,7 @@ const loginUser = asyncHandler(async(req, res) => {
     const user = await User.findOne({email});   
     if (user && (await bcrypt.compare(password, user.password))) {
         const token = generateToken(user._id);
+        logger.info({ userId: user.id, email: user.email }, 'User logged in');
         res.json({
             _id: user.id,
             name: user.name,
