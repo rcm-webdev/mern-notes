@@ -3,12 +3,11 @@ const router = express.Router();
 //controllers are used to handle the logic of the routes
 const { registerUser, loginUser, getUserProfile, logoutUser } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
-const { loginLimiter, registerLimiter } = require("../middleware/rateLimitMiddleware");
 
 
-router.post("/", registerLimiter, registerUser)
+router.post("/", registerUser)
 
-router.post("/login", loginLimiter, loginUser)
+router.post("/login", loginUser)
 
 router.get("/profile", protect, getUserProfile)
 

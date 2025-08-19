@@ -12,7 +12,7 @@ Link to project: [Add your live demo link here]
 
 This project demonstrates a complete full-stack application with a fully functional REST API and secure authentication. I built a comprehensive REST API using Node.js and Express.js with proper HTTP methods (GET, POST, PUT, DELETE) for all CRUD operations. The API follows RESTful principles with resource-based URLs (`/api/notes` and `/api/users`) and stateless requests.
 
-The backend uses MongoDB as the database with Mongoose for object modeling. Authentication is handled through JWT tokens with bcrypt for password hashing, and the API is protected with rate limiting to prevent brute force attacks. All note endpoints require valid JWT authentication, ensuring data security.
+The backend uses MongoDB as the database with Mongoose for object modeling. Authentication is handled through JWT tokens with bcrypt for password hashing. All note endpoints require valid JWT authentication, ensuring data security.
 
 The frontend is built with React.js using Vite for fast development and building. I used DaisyUI components for a clean, modern UI that's fully responsive. React Router handles client-side routing, and axios manages API calls to the backend. The authentication flow includes automatic token validation and session management, with tokens stored securely in localStorage.
 
@@ -21,7 +21,6 @@ The application architecture separates concerns with dedicated controllers, mode
 ## Optimizations
 
 - **REST API Design**: Implemented proper RESTful endpoints with appropriate HTTP methods and status codes
-- **Rate Limiting**: Implemented express-rate-limit to protect against brute force attacks and API abuse
 - **Password Security**: Used bcrypt with salt rounds for secure password hashing
 - **Token Management**: JWT tokens with 30-day expiration and automatic cleanup
 - **Responsive Design**: Mobile-first approach with DaisyUI components for optimal user experience
